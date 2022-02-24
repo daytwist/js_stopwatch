@@ -20,49 +20,50 @@ $(document).ready(function() {
     $("#time").text(`${min}:${sec}:${msec}`);
   }
 
-  function setClassInitialState() {
-    $("#start").removeClass("disabled");
-    $("#stop").addClass("disabled");
-    $("#reset").addClass("disabled");
+  function setInitialState() {
+    $("#start").prop('disabled', false);
+    $("#stop").prop('disabled', true);
+    $("#reset").prop('disabled', true);
   }
 
-  function setClassRunState() {
-    $("#start").addClass("disabled");
-    $("#stop").removeClass("disabled");
-    $("#reset").addClass("disabled");
+  function setRunState() {
+    $("#start").prop('disabled', true);
+    $("#stop").prop('disabled', false);
+    $("#reset").prop('disabled', false);
   }
 
-  function setClassStopState() {
-    $("#start").removeClass("disabled");
-    $("#stop").addClass("disabled");
-    $("#reset").removeClass("disabled");
+  function setStopState() {
+    $("#start").prop('disabled', false);
+    $("#stop").prop('disabled', true);
+    $("#reset").prop('disabled', false);
   }
 
   $("#start").click(function() {
-    if ($(this).hasClass("disabled")) {
+    if ($(this).prop('disabled') === true) {
       return;
     }
-    setClassRunState();
+    setRunState();
     startTime = Date.now();
     runTimer();
   });
 
   $("#stop").click(function() {
-    if ($(this).hasClass("disabled")) {
+    if ($(this).prop('disabled') === true) {
       return;
     }
-    setClassStopState();
+    setStopState();
     elapsedTime += currentTime - startTime;
     clearTimeout(timeoutId);
   });
 
   $("#reset").click(function() {
-    if ($(this).hasClass("disabled")) {
+    if ($(this).prop('disabled') === true) {
       return;
     }
-    setClassInitialState();
+    setInitialState();
     elapsedTime = 0;
     $("#time").text("00:00:00");
+    clearTimeout(timeoutId);
   });
 
 });
